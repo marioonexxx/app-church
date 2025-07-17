@@ -35,8 +35,8 @@
                                         class="d-inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">
-                                            <i class="fa-solid fa-trash"></i> Hapus Semua
+                                        <button type="button" class="btn btn-danger" onclick="confirmDeleteAll()">
+                                            <i class="fa fa-trash"></i> Hapus Semua Data
                                         </button>
                                     </form>
 
@@ -112,7 +112,7 @@
                             <div class="modal-body">
 
                                 {{-- Dropdown unit --}}
-                                <select name="unit_sektor" class="form-select mb-3" required >
+                                <select name="unit_sektor" class="form-select mb-3" required>
                                     <option value="" disabled selected>-- Pilih Sektor - Unit --</option>
                                     @foreach ($listUnitGabungan as $item)
                                         <option value="{{ $item['sektor'] }}|{{ $item['unit'] }}">{{ $item['label'] }}
@@ -195,6 +195,30 @@
             });
         </script>
     @endif
+
+
+    <script>
+        function confirmDeleteAll() {
+            Swal.fire({
+                title: 'Yakin ingin menghapus semua data?',
+                text: "Tindakan ini tidak bisa dibatalkan!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus semua!',
+                cancelButtonText: 'Batal',
+                customClass: {
+                    confirmButton: 'btn btn-primary text-white',
+                    cancelButton: 'btn btn-secondary'
+                },
+                buttonsStyling: false // Penting agar class kustom di atas dipakai
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('deleteAllForm').submit();
+                }
+            });
+        }
+    </script>
+
 
 
 
